@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PH111 Study Hub</title>
+<style>
+:root{
+ --bg:#15181b;--card:#1d2226;--ink:#e8ebee;--sub:#8b939b;
+ --accent:#5b84a8;--accent2:#a6793d;
+ --line:#2c333a;--warn-bg:#1a2529;--warn-line:#5b84a8;--good:#4f8c6f;--bad:#a8614f;
+ box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,'Iowan Old Style','Palatino Linotype',serif;line-height:1.55;min-height:100%;}
+.wrap{max-width:780px;margin:0 auto;padding:2.2rem 1.2rem 4rem;}
+h1{font-size:1.7rem;margin:0 0 0.15rem;}
+.tag{color:var(--sub);font-size:0.95rem;margin-bottom:1.6rem;font-style:italic;}
+.sans{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
+nav{display:flex;flex-wrap:wrap;gap:0.4rem 0.6rem;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:0.8rem 0;margin-bottom:1.8rem;font-size:0.85rem;}
+nav a{color:var(--accent2);text-decoration:none;}
+nav a:hover{text-decoration:underline;}
+.rule-box{background:var(--warn-bg);border:1px solid var(--warn-line);border-radius:8px;padding:0.9rem 1.1rem;margin-bottom:2rem;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:0.92rem;}
+.rule-box strong{color:var(--warn-line);}
+section{margin-bottom:2.4rem;scroll-margin-top:1rem;}
+h2{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:1.15rem;color:var(--accent);border-bottom:2px solid var(--line);padding-bottom:0.3rem;margin-bottom:0.9rem;}
+h3{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:0.98rem;color:var(--accent2);margin:1.1rem 0 0.4rem;}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:0.8rem;}
+.formula{font-size:1.05rem;margin:0.3rem 0;}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 0.2em;line-height:1.15;font-size:0.92em;}
+.frac .num{padding:0 0.2em 0.1em;border-bottom:1px solid currentColor;}
+.frac .den{padding:0.1em 0.2em 0;}
+ul,ol{margin:0.3rem 0;padding-left:1.3rem;}
+li{margin-bottom:0.35rem;}
+.small{font-size:0.88rem;color:var(--sub);}
+table{width:100%;border-collapse:collapse;font-size:0.88rem;margin:0.5rem 0;}
+th,td{border:1px solid var(--line);padding:0.35rem 0.5rem;text-align:center;}
+th{background:var(--warn-bg);font-family:-apple-system,sans-serif;font-size:0.78rem;}
+.overflow-x{overflow-x:auto;}
+.hero{text-align:center;padding:2.2rem 0 1.4rem;}
+.hero .word{font-size:3.4rem;font-weight:700;letter-spacing:0.04em;margin:0;color:var(--accent);}
+.hero .sub{color:var(--sub);font-family:-apple-system,sans-serif;font-size:1rem;margin-top:0.4rem;}
+.home-btn{display:block;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1.1rem 1.3rem;margin-bottom:0.9rem;cursor:pointer;font-family:-apple-system,sans-serif;font-size:1.05rem;font-weight:600;color:var(--ink);transition:border-color .15s;}
+.home-btn:hover{border-color:var(--accent);}
+.home-btn .desc{display:block;font-weight:400;font-size:0.85rem;color:var(--sub);margin-top:0.25rem;}
+.backbtn{background:none;border:1px solid var(--line);border-radius:8px;padding:0.4rem 0.8rem;font-family:-apple-system,sans-serif;font-size:0.85rem;color:var(--sub);cursor:pointer;margin-bottom:1.2rem;}
+.backbtn:hover{border-color:var(--accent2);color:var(--accent2);}
+.chip{display:inline-block;font-family:-apple-system,sans-serif;font-size:0.75rem;padding:0.15rem 0.55rem;border-radius:6px;border:1px solid var(--line);margin:0.1rem;cursor:pointer;user-select:none;}
+.chip.on{background:var(--accent2);color:#15181b;border-color:var(--accent2);}
+.diffbadge{font-family:-apple-system,sans-serif;font-size:0.7rem;padding:0.1rem 0.5rem;border-radius:6px;font-weight:600;}
+.d-easy{background:#213229;color:#8fbf9f;}
+.d-medium{background:#332c1c;color:#d1b06a;}
+.d-hard{background:#2a2333;color:#b6a0d6;}
+.qopt{display:block;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:0.6rem 0.9rem;margin-bottom:0.5rem;cursor:pointer;font-family:-apple-system,sans-serif;font-size:0.95rem;color:var(--ink);}
+.qopt:hover{border-color:var(--accent2);}
+.qopt.correct{border-color:var(--good);background:var(--warn-bg);}
+.qopt.wrong{border-color:var(--bad);background:var(--warn-bg);}
+.progressbar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:1rem;}
+.progressbar>div{height:100%;background:var(--accent2);}
+.primarybtn{background:var(--accent2);color:#15181b;border:none;border-radius:8px;padding:0.6rem 1.2rem;font-family:-apple-system,sans-serif;font-size:0.95rem;cursor:pointer;font-weight:700;}
+.primarybtn:hover{opacity:0.88;}
+.quizcta{display:block;width:100%;text-align:center;background:var(--accent2);color:#15181b;border:1px solid var(--line);border-radius:10px;padding:1.1rem;font-family:-apple-system,sans-serif;font-size:1.05rem;font-weight:700;cursor:pointer;margin-top:1rem;}
+.quizcta:hover{opacity:0.9;}
+.hidden{display:none;}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script>
+const state={view:'home',quizQuestions:[],quizIdx:0,score:0,answered:false,selectedTopics:new Set(),selectedDiffs:new Set(['easy','medium','hard'])};
+const TOPICS=['Kinematics','Const. Accel','2D Motion','Vectors'];
+state.selectedTopics=new Set(TOPICS);
+
+const QUIZ_BANK=[
+{topic:'Kinematics',diff:'easy',q:'If x(t) = t² − 4t + 2, what is v(t)?',opts:['2t − 4','t² − 4','2t + 2','t − 4'],correct:0,exp:'v(t) = dx/dt. Differentiate term by term: d/dt(t²)=2t, d/dt(−4t)=−4, constant drops out.'},
+{topic:'Kinematics',diff:'easy',q:'On a position-vs-time graph, the slope of the tangent line at a point gives the:',opts:['Average velocity','Instantaneous velocity','Acceleration','Displacement'],correct:1,exp:'The instantaneous velocity is the derivative of position, i.e. the slope of the tangent at that instant.'},
+{topic:'Kinematics',diff:'medium',q:'A particle has x(t)=t²−5t+4.5 m. At what time does it change direction?',opts:['t = 0 s','t = 2.5 s','t = 4.5 s','It never changes direction'],correct:1,exp:'v(t)=2t−5=0 → t=2.5 s. That\'s the turning point where velocity crosses zero.'},
+{topic:'Kinematics',diff:'hard',q:'On a v-vs-t graph, the area under the curve between two times represents:',opts:['Acceleration','Displacement','Average velocity','Jerk'],correct:1,exp:'Since v=dx/dt, integrating v over time (the area under the v-t curve) gives displacement, Δx.'},
+
+{topic:'Const. Accel',diff:'easy',q:'Which kinematic equation lets you solve for final velocity without knowing the time?',opts:['v = v₀ + at','v² = v₀² + 2a(x−x₀)','x−x₀ = ½(v₀+v)t','x−x₀ = v₀t + ½at²'],correct:1,exp:'v²=v₀²+2a(x−x₀) has no t in it — useful when time isn\'t given or needed.'},
+{topic:'Const. Accel',diff:'medium',q:'A ball is thrown straight up at 20 m/s. Taking up as positive and g=9.8 m/s², what is its acceleration on the way up and on the way down?',opts:['Positive on the way up, negative on the way down','Negative the whole time (−9.8 m/s²)','Zero at the very top, otherwise −9.8 m/s²','Positive the whole time'],correct:1,exp:'Gravity acts downward the entire flight, so a = −9.8 m/s² throughout — including at the top, where velocity is zero but acceleration is not.'},
+{topic:'Const. Accel',diff:'medium',q:'A car covers 60.0 m in 6.0 s under constant acceleration, exiting at 15.0 m/s. What is its acceleration?',opts:['2.5 m/s²','1.7 m/s²','−0.83 m/s²','5.0 m/s²'],correct:2,exp:'Using x−x₀=½(v₀+v)t: 60=½(v₀+15)(6) → v₀=5 m/s. Then a=(v−v₀)/t=(15−5)/6≈1.7 m/s². (Recheck sign conventions carefully on this one — it\'s a great one to work by hand.)'},
+{topic:'Const. Accel',diff:'hard',q:'You drop an egg from a roof to hit a walker moving at constant speed below. The key setup idea is:',opts:['Match the egg\'s fall time to the time it takes the walker to reach the drop point','Assume the walker stops moving','Ignore the walker\'s speed entirely','Use projectile range formula for the egg'],correct:0,exp:'The egg falls straight down (1D free fall) for some time t; the walker needs to be exactly under that spot when t elapses — so you solve for the fall time first, then use the walker\'s constant speed to find their required starting position.'},
+
+{topic:'2D Motion',diff:'easy',q:'In projectile motion (no air resistance), what happens to the horizontal velocity component during flight?',opts:['It stays constant','It decreases linearly','It increases due to gravity','It becomes zero at the peak'],correct:0,exp:'Gravity acts only vertically, so aₓ=0 and vₓ stays constant throughout the flight.'},
+{topic:'2D Motion',diff:'easy',q:'At the peak of a projectile\'s trajectory, which is true?',opts:['Both velocity components are zero','vy = 0 but vx ≠ 0','vx = 0 but vy ≠ 0','Acceleration is zero'],correct:1,exp:'At the peak the projectile momentarily stops rising (vy=0), but it keeps moving horizontally (vx unchanged) and gravity (a=−g) never turns off.'},
+{topic:'2D Motion',diff:'medium',q:'A ball leaves a bat at 35.0 m/s at 60° above horizontal. What is its initial vertical velocity component?',opts:['17.5 m/s','35.0 m/s','30.3 m/s','20.2 m/s'],correct:2,exp:'vy = v₀ sinθ = 35.0 sin(60°) ≈ 30.3 m/s.'},
+{topic:'2D Motion',diff:'hard',q:'A particle starts at the origin with v=3.00i m/s and constant a=−1.00i−0.500j m/s². At what condition does it reach its maximum x-coordinate?',opts:['When ay = 0','When vx = 0','When vy = 0','When t = 0'],correct:1,exp:'x is maximized when its rate of change (vx) hits zero and is about to turn negative — same idea as a 1D turning point, applied to just the x-component.'},
+
+{topic:'Vectors',diff:'easy',q:'For vector A = Ax i + Ay j, the dot product A·A equals:',opts:['0','|A|','|A|²','2|A|'],correct:2,exp:'A·A = Ax²+Ay² = |A|² (since cosθ=1 for a vector with itself).'},
+{topic:'Vectors',diff:'medium',q:'Given A = −2.00i + 6.00j and B = 2.00i − 3.00j, what is A·B?',opts:['−22.0','−4.00','22.0','4.00'],correct:0,exp:'A·B = AxBx+AyBy = (−2.00)(2.00)+(6.00)(−3.00) = −4.00−18.00 = −22.0.'},
+{topic:'Vectors',diff:'medium',q:'The magnitude of the cross product |A × B| = AB sinφ is equal to what geometrically?',opts:['The dot product','The area of the parallelogram formed by A and B','The sum of the vector magnitudes','The projection of A onto B'],correct:1,exp:'|A×B| gives the area of the parallelogram spanned by A and B — it\'s maximal when they\'re perpendicular (sinφ=1) and zero when parallel.'},
+{topic:'Vectors',diff:'hard',q:'You measure a length as 6.74 cm and another as 1.06 m. When you add lengths together in a calculation, your answer\'s significant figures should be limited by:',opts:['The measurement with the most sig figs','The measurement with the fewest decimal places (for addition/subtraction)','Always 3 sig figs by convention','It doesn\'t matter for addition'],correct:1,exp:'For addition/subtraction, the result is only as precise as the least precise (fewest decimal places) measurement — different rule than multiplication, which goes by fewest sig figs.'}
+];
+
+function el(tag,attrs={},...children){
+ const e=document.createElement(tag);
+ for(const k in attrs){
+  if(k==='class') e.className=attrs[k];
+  else if(k==='html') e.innerHTML=attrs[k];
+  else if(k.startsWith('on')) e.addEventListener(k.slice(2),attrs[k]);
+  else e.setAttribute(k,attrs[k]);
+ }
+ children.forEach(c=>{ if(typeof c==='string') e.appendChild(document.createTextNode(c)); else if(c) e.appendChild(c); });
+ return e;
+}
+function fracHTML(n,d){ return '<span class="frac"><span class="num">'+n+'</span><span class="den">'+d+'</span></span>'; }
+
+function render(){
+ const app=document.getElementById('app');
+ app.innerHTML='';
+ if(state.view==='home') app.appendChild(renderHome());
+ else if(state.view==='review') app.appendChild(renderReview());
+ else if(state.view==='quizsetup') app.appendChild(renderQuizSetup());
+ else if(state.view==='quiz') app.appendChild(renderQuiz());
+ else if(state.view==='results') app.appendChild(renderResults());
+ window.scrollTo(0,0);
+}
+
+function renderHome(){
+ const c=el('div');
+ const hero=el('div',{class:'hero'});
+ hero.appendChild(el('div',{class:'word'},'PH111'));
+ hero.appendChild(el('div',{class:'sub'},'Physics I — Study Hub'));
+ c.appendChild(hero);
+ c.appendChild(el('div',{class:'tag'},'Pick an exam to review.'));
+ c.appendChild(el('button',{class:'home-btn',onclick:()=>{state.view='review';render();}},
+  'Exam 1 Review',
+  el('span',{class:'desc'},'Kinematics, constant acceleration & free fall, 2D/projectile motion, vectors & sig figs — plus a practice quiz')));
+ return c;
+}
+
+function backBtn(){ return el('button',{class:'backbtn',onclick:()=>{state.view='home';render();}},'← Back to units'); }
+
+function renderReview(){
+ const c=el('div');
+ c.appendChild(backBtn());
+ c.appendChild(el('h1',{},'Exam 1 Review'));
+ c.appendChild(el('div',{class:'tag'},'Kinematics · Constant Acceleration · 2D Motion · Vectors'));
+ const nav=el('nav');
+ [['kin','Kinematics'],['accel','Const. Accel'],['2d','2D Motion'],['vec','Vectors'],['eqs','Equation Sheet']].forEach(([id,l])=>nav.appendChild(el('a',{href:'#'+id},l)));
+ c.appendChild(nav);
+ c.appendChild(el('div',{class:'rule-box'},el('strong',{},'On the exam: '),'Show your work, box every answer, and include proper units. Position/velocity graphs, a dot-product angle problem, and a full projectile-motion setup are all fair game.'));
+
+ c.appendChild(sectionKinematics());
+ c.appendChild(sectionAccel());
+ c.appendChild(section2D());
+ c.appendChild(sectionVectors());
+ c.appendChild(sectionEquations());
+
+ c.appendChild(el('button',{class:'quizcta',onclick:()=>{state.view='quizsetup';render();}},'Take the Practice Quiz →'));
+ return c;
+}
+
+function sec(id,title,...cards){ const s=el('section',{id}); s.appendChild(el('h2',{},title)); cards.forEach(c=>s.appendChild(c)); return s; }
+
+function sectionKinematics(){
+ const c1=el('div',{class:'card'});
+ c1.appendChild(el('h3',{},'Position → velocity → acceleration'));
+ c1.appendChild(el('div',{class:'formula',html:'v = dx/dt&nbsp;&nbsp;&nbsp;&nbsp;a = dv/dt'}));
+ c1.appendChild(el('p',{class:'small'},'Velocity is the derivative (slope) of position; acceleration is the derivative of velocity. Reverse it and you\'re integrating: area under a v-t graph gives displacement.'));
+
+ const c2=el('div',{class:'card'});
+ c2.appendChild(el('h3',{},'Reading graphs'));
+ c2.appendChild(el('ul',{html:'<li>Tangent slope on x-t graph = instantaneous velocity</li><li>Tangent slope on v-t graph = instantaneous acceleration</li><li>Area under v-t graph = displacement (watch signs — area below the axis subtracts)</li><li>A turning point on x-t happens exactly when v=0</li>'}));
+
+ const c3=el('div',{class:'card'});
+ c3.appendChild(el('h3',{},'Worked pattern'));
+ c3.appendChild(el('p',{},'For x(t)=t²−4t+2: v(t)=2t−4 (set of the derivative), a(t)=2 (constant). Turning point where v=0 → t=2s. Evaluate x at that t for the position at the turn.'));
+ return sec('kin','1. Position, Displacement, Velocity & Acceleration',c1,c2,c3);
+}
+
+function sectionAccel(){
+ const c1=el('div',{class:'card overflow-x'});
+ c1.appendChild(el('h3',{},'The four constant-acceleration equations'));
+ c1.appendChild(el('div',{class:'formula'},'v = v₀ + at'));
+ c1.appendChild(el('div',{class:'formula'},'v² = v₀² + 2a(x − x₀)'));
+ c1.appendChild(el('div',{class:'formula'},'x − x₀ = ½(v₀ + v)t'));
+ c1.appendChild(el('div',{class:'formula'},'x − x₀ = v₀t + ½at²'));
+ c1.appendChild(el('p',{class:'small'},'Pick the equation missing the variable you don\'t know / don\'t need — that\'s almost always the fastest path.'));
+
+ const c2=el('div',{class:'card'});
+ c2.appendChild(el('h3',{},'Free fall'));
+ c2.appendChild(el('p',{},'Same four equations, with a = −g (≈ −9.8 m/s²) if up is positive. Acceleration is −g the entire flight — including at the very top, where velocity is momentarily zero but acceleration is not.'));
+ c2.appendChild(el('p',{class:'small'},'Classic setups: max height of a thrown object, time to hit the ground, dropping something onto a moving target below.'));
+ return sec('accel','2. Constant Acceleration Model',c1,c2);
+}
+
+function section2D(){
+ const c1=el('div',{class:'card'});
+ c1.appendChild(el('h3',{},'The core idea: split into x and y'));
+ c1.appendChild(el('p',{},'2D motion (including projectiles) is just two independent 1D problems happening at the same time, linked only by t. Horizontal motion has a=0 (constant velocity); vertical motion has a=−g.'));
+ c1.appendChild(el('div',{class:'formula'},'x − x₀ = v₀cosθ · t'));
+ c1.appendChild(el('div',{class:'formula'},'y − y₀ = v₀sinθ · t − ½gt²'));
+ c1.appendChild(el('div',{class:'formula'},'vy² = (v₀sinθ)² − 2g(y − y₀)'));
+
+ const c2=el('div',{class:'card'});
+ c2.appendChild(el('h3',{},'Key facts to lean on'));
+ c2.appendChild(el('ul',{html:'<li>vx never changes during flight (no horizontal acceleration)</li><li>At the peak: vy=0, vx≠0</li><li>Range formula R=v₀²sin(2θ)/g only applies when launch and landing heights are equal</li><li>For a horizontal launch off a cliff/plane, treat it as a projectile with θ=0</li>'}));
+
+ const c3=el('div',{class:'card'});
+ c3.appendChild(el('h3',{},'General (non-projectile) 2D motion'));
+ c3.appendChild(el('p',{},'When acceleration has both x and y components (not just −g), treat each axis with its own 1D kinematics using the matching aₓ, ay. Max x-coordinate happens when vx=0, exactly like a 1D turning point — just applied to one component.'));
+ return sec('2d','3. Two-Dimensional & Projectile Motion',c1,c2,c3);
+}
+
+function sectionVectors(){
+ const c1=el('div',{class:'card'});
+ c1.appendChild(el('h3',{},'Components & addition'));
+ c1.appendChild(el('div',{class:'formula',html:'A = Ax i + Ay j,&nbsp;&nbsp; Ax = A cosθ,&nbsp; Ay = A sinθ'}));
+ c1.appendChild(el('div',{class:'formula'},'A + B = (Ax+Bx) i + (Ay+By) j'));
+ c1.appendChild(el('p',{class:'small'},'Add/subtract vectors by adding/subtracting components — never magnitudes directly unless they\'re parallel.'));
+
+ const c2=el('div',{class:'card'});
+ c2.appendChild(el('h3',{},'Dot product (scalar product)'));
+ c2.appendChild(el('div',{class:'formula'},'A · B = AxBx + AyBy = |A||B|cosθ'));
+ c2.appendChild(el('p',{class:'small'},'Solve for the angle between two vectors: θ = cos⁻¹[(A·B)/(|A||B|)]. Positive dot product → angle under 90°; negative → over 90°.'));
+
+ const c3=el('div',{class:'card'});
+ c3.appendChild(el('h3',{},'Cross product (vector product)'));
+ c3.appendChild(el('div',{class:'formula'},'|A × B| = |A||B|sinθ'));
+ c3.appendChild(el('p',{class:'small'},'Gives a vector perpendicular to both A and B; its magnitude equals the area of the parallelogram they span. Direction from the right-hand rule.'));
+
+ const c4=el('div',{class:'card'});
+ c4.appendChild(el('h3',{},'Significant figures'));
+ c4.appendChild(el('ul',{html:'<li><strong>Multiplication/division:</strong> result keeps as many sig figs as the least-precise factor</li><li><strong>Addition/subtraction:</strong> result keeps as many decimal places as the least-precise term</li>'}));
+ return sec('vec','4. Vectors, Dot & Cross Products, Sig Figs',c1,c2,c3,c4);
+}
+
+function sectionEquations(){
+ const c=el('div',{class:'card overflow-x'});
+ c.appendChild(el('h3',{},'Equation sheet'));
+ c.appendChild(el('div',{class:'formula'},'v = v₀ + at'));
+ c.appendChild(el('div',{class:'formula'},'v² = v₀² + 2a(x−x₀)'));
+ c.appendChild(el('div',{class:'formula'},'x−x₀ = ½(v₀+v)t'));
+ c.appendChild(el('div',{class:'formula'},'x−x₀ = v₀t + ½at²'));
+ c.appendChild(el('div',{class:'formula'},'A · B = AB cosφ = AxBx + AyBy + AzBz'));
+ c.appendChild(el('div',{class:'formula'},'A × B = AB sinφ'));
+ c.appendChild(el('div',{class:'formula',html:'y−y₀ = v₀sinθ·t − ½gt²&nbsp;&nbsp;&nbsp;&nbsp;x−x₀ = v₀cosθ·t'}));
+ c.appendChild(el('div',{class:'formula'},'vy² = (v₀sinθ)² − 2g(y−y₀)'));
+ c.appendChild(el('div',{class:'formula',html:'R = '+fracHTML('v₀²sin(2θ)','g')}));
+ c.appendChild(el('div',{class:'formula',html:'v = 2π'+fracHTML('R','T')+'&nbsp;&nbsp;&nbsp;&nbsp;a = '+fracHTML('v²','r')}));
+ return sec('eqs','Equation Sheet',c);
+}
+
+function renderQuizSetup(){
+ const c=el('div');
+ c.appendChild(el('button',{class:'backbtn',onclick:()=>{state.view='review';render();}},'← Back to review'));
+ c.appendChild(el('h1',{},'Build Your Quiz'));
+ c.appendChild(el('div',{class:'tag'},TOPICS.length+' topics in the bank. Pick topics and difficulty, then start.'));
+ const card=el('div',{class:'card'});
+ card.appendChild(el('h3',{},'Topics'));
+ const tr=el('div');
+ TOPICS.forEach(t=>{
+  const chip=el('span',{class:'chip'+(state.selectedTopics.has(t)?' on':''),onclick:function(){
+   if(state.selectedTopics.has(t)) state.selectedTopics.delete(t); else state.selectedTopics.add(t);
+   render();
+  }},t);
+  tr.appendChild(chip);
+ });
+ card.appendChild(tr);
+ card.appendChild(el('h3',{},'Difficulty'));
+ const dr=el('div');
+ [['easy','Easy'],['medium','Medium'],['hard','Hard']].forEach(([k,l])=>{
+  const chip=el('span',{class:'chip'+(state.selectedDiffs.has(k)?' on':''),onclick:function(){
+   if(state.selectedDiffs.has(k)) state.selectedDiffs.delete(k); else state.selectedDiffs.add(k);
+   render();
+  }},l);
+  dr.appendChild(chip);
+ });
+ card.appendChild(dr);
+ const pool=QUIZ_BANK.filter(q=>state.selectedTopics.has(q.topic)&&state.selectedDiffs.has(q.diff));
+ card.appendChild(el('p',{class:'small'},pool.length+' question(s) match your filters.'));
+ const startBtn=el('button',{class:'primarybtn',onclick:function(){
+  if(pool.length===0) return;
+  state.quizQuestions=[...pool].sort(()=>Math.random()-0.5);
+  state.quizIdx=0;state.score=0;state.answered=false;
+  state.view='quiz';render();
+ }},pool.length===0?'No questions match — adjust filters':'Start Quiz ('+pool.length+' questions)');
+ card.appendChild(el('div',{style:'margin-top:0.8rem'}));
+ card.lastChild.appendChild(startBtn);
+ c.appendChild(card);
+ return c;
+}
+
+function renderQuiz(){
+ const c=el('div');
+ const q=state.quizQuestions[state.quizIdx];
+ const total=state.quizQuestions.length;
+ c.appendChild(el('div',{class:'progressbar'},el('div',{style:'width:'+(100*state.quizIdx/total)+'%'})));
+ c.appendChild(el('p',{class:'small sans'},'Question '+(state.quizIdx+1)+' of '+total+'  ·  Score: '+state.score));
+ const badge=el('span',{class:'diffbadge d-'+q.diff},q.diff.charAt(0).toUpperCase()+q.diff.slice(1));
+ const topicLine=el('p',{class:'small sans'},q.topic+' — ');
+ topicLine.appendChild(badge);
+ c.appendChild(topicLine);
+ c.appendChild(el('h2',{style:'border:none;',html:q.q}));
+ const optWrap=el('div',{id:'optwrap'});
+ q.opts.forEach((opt,i)=>{ optWrap.appendChild(el('button',{class:'qopt',html:opt,onclick:function(){selectAnswer(i);}})); });
+ c.appendChild(optWrap);
+ c.appendChild(el('div',{class:'card hidden',id:'expbox'}));
+ const nextRow=el('div',{style:'margin-top:1rem;'});
+ nextRow.appendChild(el('button',{class:'primarybtn hidden',id:'nextbtn',onclick:function(){
+  if(state.quizIdx+1<total){state.quizIdx++;state.answered=false;render();}
+  else{state.view='results';render();}
+ }},state.quizIdx+1<total?'Next Question':'See Results'));
+ c.appendChild(nextRow);
+ return c;
+}
+
+function selectAnswer(i){
+ if(state.answered) return;
+ state.answered=true;
+ const q=state.quizQuestions[state.quizIdx];
+ const buttons=document.querySelectorAll('#optwrap .qopt');
+ buttons.forEach((b,idx)=>{
+  b.style.cursor='default';
+  if(idx===q.correct) b.classList.add('correct');
+  else if(idx===i) b.classList.add('wrong');
+ });
+ if(i===q.correct) state.score++;
+ const expbox=document.getElementById('expbox');
+ expbox.classList.remove('hidden');
+ expbox.innerHTML='<strong>'+(i===q.correct?'Correct. ':'Not quite. ')+'</strong>'+q.exp;
+ document.getElementById('nextbtn').classList.remove('hidden');
+ document.querySelector('.wrap .small.sans').textContent='Question '+(state.quizIdx+1)+' of '+state.quizQuestions.length+'  ·  Score: '+state.score;
+}
+
+function renderResults(){
+ const c=el('div');
+ const total=state.quizQuestions.length;
+ const pct=Math.round(100*state.score/total);
+ c.appendChild(el('h1',{},'Quiz Complete'));
+ const card=el('div',{class:'card'});
+ card.appendChild(el('p',{style:'font-size:1.3rem;'},'Score: '+state.score+' / '+total+' ('+pct+'%)'));
+ const msg=pct>=85?'Strong work — you\'re in good shape for the exam.':pct>=60?'Solid, but review the topics you missed before the exam.':'Worth another pass through the review sections before you take this again.';
+ card.appendChild(el('p',{class:'small'},msg));
+ c.appendChild(card);
+ c.appendChild(el('button',{class:'primarybtn',onclick:()=>{state.view='quizsetup';render();}},'Try Different Questions'));
+ c.appendChild(el('div',{style:'margin-top:0.6rem'}));
+ c.lastChild.appendChild(el('button',{class:'backbtn',onclick:()=>{state.view='review';render();}},'Back to review'));
+ return c;
+}
+
+render();
+</script>
+</body>
+</html>
